@@ -1,6 +1,4 @@
-Text Categorization in Python
-- Note: I had issues with the C library so I was not able to use the help in Mitchell's Book so I used Python
-to manually implement the Naive Bayes classifier. Also I was granted a one week extension.
+Text Categorization
 
 Dataset
 - 20-newsgroups-bydate (CSE Website Link)
@@ -35,8 +33,7 @@ while (at least 30 minutes), and you need the 20news-18828 dataset in your curre
 	Post:
 		- Creates a directory called cross_valid with 10 splits
 
-- NaiveBayes.py: This is my own python implementation of the Naive Bayes algorithm in accordance with
-Mitchell's book Table 6.2. Expected computation time is about 10-30 seconds. Have to manually adjust the
+- NaiveBayes.py: This is my own python implementation of the Naive Bayes algorithm. Expected computation time is about 10-30 seconds. Have to manually adjust the
 code if you want to adjust for different datasets (see code and it will guide you). Also able to adjust
 feature selection methods to work with performance measures.
 	Module Requirements:
@@ -51,7 +48,7 @@ feature selection methods to work with performance measures.
 	Post:
 		- Prints out performance measures in a neat table and other required information
 
-- SupervisedLearning.py: This is guided by the tutorial as linked in the code. It contains the
+- SupervisedLearning.py: It contains the
 Multinomial Bayes Classifier with Term Frequency or without (Have to adjust manually if you want to
 check different performances). Have to manually adjust the code if you want to adjust for different datasets
 (see code and it will guide you).
