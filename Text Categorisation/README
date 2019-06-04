@@ -1,0 +1,231 @@
+Text Categorization in Python
+- Note: I had issues with the C library so I was not able to use the help in Mitchell's Book so I used Python
+to manually implement the Naive Bayes classifier. Also I was granted a one week extension.
+
+Dataset
+- 20-newsgroups-bydate (CSE Website Link)
+- 20news-19997 (CSE Website Link)
+
+Dataset by date
+- 20news-bydate-train
+- 20news-bydate-test
+
+Dataset following Process
+- cross_valid/1/train
+- cross_valid/1/test
+- ...
+- ...
+- cross_valid/10/train
+- cross_valid/10/test
+
+Main Requirements 
+- Python 2.7
+
+Code
+- PreProcess.py: This is the python script for making a cross-validation dataset. Note that this may take a
+while (at least 30 minutes), and you need the 20news-18828 dataset in your current directory for it to work
+	Module Requirements:
+		- Sklearn.datasets: For checking if UTF compatible so can open in the library
+		- Colorama: For making the wait time look nice and making sure that it doesn't hang
+		- Termcolor: ""	 ""
+		- Random: For Monte Carlo Cross Validation (Random Sampling)
+		- Numpy: Working with arrays/matrices
+	Run:
+		- python PreProcess.py (Need 20news-18828 dataset otherwise will fail)
+	Post:
+		- Creates a directory called cross_valid with 10 splits
+
+- NaiveBayes.py: This is my own python implementation of the Naive Bayes algorithm in accordance with
+Mitchell's book Table 6.2. Expected computation time is about 10-30 seconds. Have to manually adjust the
+code if you want to adjust for different datasets (see code and it will guide you). Also able to adjust
+feature selection methods to work with performance measures.
+	Module Requirements:
+		- re: Regex for vocabulary
+		- os: For working with dataset
+		- math: Working with numbers
+		- string: working with string for print
+		- Counter: For tokenizing vocabulary
+		- PrettyTable: "" ""
+	Run:
+		- python NaiveBayes.py
+	Post:
+		- Prints out performance measures in a neat table and other required information
+
+- SupervisedLearning.py: This is guided by the tutorial as linked in the code. It contains the
+Multinomial Bayes Classifier with Term Frequency or without (Have to adjust manually if you want to
+check different performances). Have to manually adjust the code if you want to adjust for different datasets
+(see code and it will guide you).
+	Module Requirements:
+		- sys: Working with dataset
+		- sklearn.dataset: Creates corpus for text
+		- sklearn.metrics: Prints performance stuff
+		- numpy: Working with matrix/arrays
+		- os: Working with dataset
+		- sklearn.feature_extraction.text: working with corpus
+		- sklearn.pipline: making the library streamlined
+		- metrics: Performance measures
+		- sklearn.naive_bayes: Naive Bayes library
+		- sklearn.linear_model: Logistic Regression library
+		- sklearn.svm: Support Vector Machine library
+		- sklearn.ensemble: Random forest library
+	Run:
+		- python SupervisedLearning.py
+	Post:
+		- Prints out performance measure in a neat table and other required information
+
+Sample Printed Out Code:
+
+Building initial vocabulary and calculating probabilities
+=========================================================
+Vocabulary is created with length 93384
+=========================================================
+Feature Selection:
+1. Pruning words with frequency less than 2
+Vocabulary is pruned with length 52265
+2. Pruning most 100 common words
+Vocabulary is pruned with length 52165
+3. Choosing words with high mutual information with class
+Simple Average for 5000 common words mutual in class
+Vocabulary for information gain complete
+=========================================================
+====================Training  Classes====================
+['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc', 'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware', 'comp.windows.x', 'misc.forsale', 'rec.autos', 'rec.motorcycles', 'rec.sport.baseball', 'rec.sport.hockey', 'sci.crypt', 'sci.electronics', 'sci.med', 'sci.space', 'soc.religion.christian', 'talk.politics.guns', 'talk.politics.mideast', 'talk.politics.misc', 'talk.religion.misc']
+====================Training Finished====================
+Split of 60% training and 40% testing
+Naive Bayes 0.899067
+                          precision    recall  f1-score   support
+
+             alt.atheism       0.87      0.91      0.89       292
+           comp.graphics       0.80      0.88      0.84       344
+ comp.os.ms-windows.misc       0.89      0.80      0.84       315
+comp.sys.ibm.pc.hardware       0.76      0.84      0.80       332
+   comp.sys.mac.hardware       0.89      0.90      0.89       344
+          comp.windows.x       0.89      0.89      0.89       347
+            misc.forsale       0.87      0.87      0.87       337
+               rec.autos       0.93      0.91      0.92       360
+         rec.motorcycles       0.95      0.98      0.97       389
+      rec.sport.baseball       0.98      0.97      0.98       388
+        rec.sport.hockey       0.98      0.99      0.98       395
+               sci.crypt       0.96      0.96      0.96       379
+         sci.electronics       0.91      0.86      0.88       336
+                 sci.med       0.96      0.93      0.95       370
+               sci.space       0.96      0.96      0.96       378
+  soc.religion.christian       0.91      0.93      0.92       373
+      talk.politics.guns       0.85      0.97      0.90       352
+   talk.politics.mideast       0.95      0.97      0.96       363
+      talk.politics.misc       0.88      0.83      0.85       256
+      talk.religion.misc       0.92      0.65      0.76       162
+
+             avg / total       0.91      0.90      0.90       340
+
+
+Training on 20 classes: ['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc', 'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware', 'comp.windows.x', 'misc.forsale', 'rec.autos', 'rec.motorcycles', 'rec.sport.baseball', 'rec.sport.hockey', 'sci.crypt', 'sci.electronics', 'sci.med', 'sci.space', 'soc.religion.christian', 'talk.politics.guns', 'talk.politics.mideast', 'talk.politics.misc', 'talk.religion.misc']
+(Number of documents, Vocabulary Length): (11314, 130107)
+Using Naive Bayes
+0.77389803505
+                          precision    recall  f1-score   support
+
+             alt.atheism       0.80      0.52      0.63       319
+           comp.graphics       0.81      0.65      0.72       389
+ comp.os.ms-windows.misc       0.82      0.65      0.73       394
+comp.sys.ibm.pc.hardware       0.67      0.78      0.72       392
+   comp.sys.mac.hardware       0.86      0.77      0.81       385
+          comp.windows.x       0.89      0.75      0.82       395
+            misc.forsale       0.93      0.69      0.80       390
+               rec.autos       0.85      0.92      0.88       396
+         rec.motorcycles       0.94      0.93      0.93       398
+      rec.sport.baseball       0.92      0.90      0.91       397
+        rec.sport.hockey       0.89      0.97      0.93       399
+               sci.crypt       0.59      0.97      0.74       396
+         sci.electronics       0.84      0.60      0.70       393
+                 sci.med       0.92      0.74      0.82       396
+               sci.space       0.84      0.89      0.87       394
+  soc.religion.christian       0.44      0.98      0.61       398
+      talk.politics.guns       0.64      0.94      0.76       364
+   talk.politics.mideast       0.93      0.91      0.92       376
+      talk.politics.misc       0.96      0.42      0.58       310
+      talk.religion.misc       0.97      0.14      0.24       251
+
+             avg / total       0.82      0.77      0.77      7532
+
+Using Logistic Regression
+0.827934147637
+                          precision    recall  f1-score   support
+
+             alt.atheism       0.80      0.74      0.77       319
+           comp.graphics       0.69      0.78      0.74       389
+ comp.os.ms-windows.misc       0.76      0.75      0.75       394
+comp.sys.ibm.pc.hardware       0.73      0.72      0.72       392
+   comp.sys.mac.hardware       0.81      0.83      0.82       385
+          comp.windows.x       0.83      0.74      0.78       395
+            misc.forsale       0.76      0.90      0.83       390
+               rec.autos       0.91      0.89      0.90       396
+         rec.motorcycles       0.94      0.95      0.94       398
+      rec.sport.baseball       0.87      0.93      0.90       397
+        rec.sport.hockey       0.94      0.96      0.95       399
+               sci.crypt       0.93      0.89      0.91       396
+         sci.electronics       0.76      0.78      0.77       393
+                 sci.med       0.89      0.84      0.86       396
+               sci.space       0.89      0.92      0.91       394
+  soc.religion.christian       0.79      0.93      0.85       398
+      talk.politics.guns       0.71      0.90      0.80       364
+   talk.politics.mideast       0.96      0.89      0.92       376
+      talk.politics.misc       0.79      0.58      0.67       310
+      talk.religion.misc       0.83      0.45      0.59       251
+
+             avg / total       0.83      0.83      0.83      7532
+
+Using Linear SVC Classifier
+0.853159851301
+                          precision    recall  f1-score   support
+
+             alt.atheism       0.82      0.80      0.81       319
+           comp.graphics       0.76      0.80      0.78       389
+ comp.os.ms-windows.misc       0.77      0.73      0.75       394
+comp.sys.ibm.pc.hardware       0.71      0.76      0.74       392
+   comp.sys.mac.hardware       0.84      0.86      0.85       385
+          comp.windows.x       0.87      0.76      0.81       395
+            misc.forsale       0.83      0.91      0.87       390
+               rec.autos       0.92      0.91      0.91       396
+         rec.motorcycles       0.95      0.95      0.95       398
+      rec.sport.baseball       0.92      0.95      0.93       397
+        rec.sport.hockey       0.96      0.98      0.97       399
+               sci.crypt       0.93      0.94      0.93       396
+         sci.electronics       0.81      0.79      0.80       393
+                 sci.med       0.90      0.87      0.88       396
+               sci.space       0.90      0.93      0.92       394
+  soc.religion.christian       0.84      0.93      0.88       398
+      talk.politics.guns       0.75      0.92      0.82       364
+   talk.politics.mideast       0.97      0.89      0.93       376
+      talk.politics.misc       0.82      0.62      0.71       310
+      talk.religion.misc       0.75      0.61      0.68       251
+
+             avg / total       0.85      0.85      0.85      7532
+
+Using Random Forest Classifier
+0.534917684546
+                          precision    recall  f1-score   support
+
+             alt.atheism       0.41      0.49      0.45       319
+           comp.graphics       0.29      0.44      0.35       389
+ comp.os.ms-windows.misc       0.39      0.55      0.45       394
+comp.sys.ibm.pc.hardware       0.36      0.43      0.39       392
+   comp.sys.mac.hardware       0.45      0.56      0.50       385
+          comp.windows.x       0.49      0.48      0.48       395
+            misc.forsale       0.56      0.72      0.63       390
+               rec.autos       0.58      0.53      0.55       396
+         rec.motorcycles       0.65      0.69      0.67       398
+      rec.sport.baseball       0.56      0.61      0.58       397
+        rec.sport.hockey       0.73      0.69      0.71       399
+               sci.crypt       0.74      0.72      0.73       396
+         sci.electronics       0.32      0.20      0.25       393
+                 sci.med       0.53      0.36      0.43       396
+               sci.space       0.73      0.58      0.64       394
+  soc.religion.christian       0.62      0.79      0.70       398
+      talk.politics.guns       0.61      0.55      0.58       364
+   talk.politics.mideast       0.86      0.61      0.71       376
+      talk.politics.misc       0.64      0.31      0.42       310
+      talk.religion.misc       0.54      0.20      0.30       251
+
+             avg / total       0.55      0.53      0.53      7532
+
