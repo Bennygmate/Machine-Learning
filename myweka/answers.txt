@@ -1,0 +1,63 @@
+1a) 
+Looking at the results, there is an observed "Learning Curve" effect where the percentage incorrect (error) decreases over the sample size percent (proportion of training data) seen by the algorithm. 
+As an example:
+For IBk with respect to Zero R in credit-rating for sample size percent (10%, 25%, 50%, 75%, 100%) respectively there is percentage incorrect of (21.54, 20.51, 19.67, 18.80, 18.43) where the error decreases dependent on the larger the proportion of training data seen by the IBk.
+For J48 with respect to Zero R in credit-rating for sample size percent (10%, 25%, 50%, 75%, 100%) respectively there is percentage incorrect of (16.91, 15.55, 15.25, 14.91, 14.43) where the error decreases dependent on the larger the proportion of training data seen by the J48.
+The reason the "Learning Curve" effect can be observed is because when exposed to more training data, you get a better representation of the population that you are trying to make an inference on for the sample. Descriptively this can be seen as the percentage incorrect decreases (across all datasets) and hence the generalization error decreases as the model gets trained by more samples. 
+There is a variation in the "learning curve" effect where for datasets credit-rating, hypothyroid and vote the algorithm of J48 has a higher learning curve than IBk and where the algorithm of IBk has a higher learning curve than J48 in the datasets of letter and microarray.
+
+1b) 
+	Mean error reduction relative to ZeroR
+algorithm 	after 10% training	after 100% training
+IBk			35.21%				57.64%
+J48			49.59%				71.93%
+
+This positive reduction in error for the algorithm IBk is expected because since IBk is for the 1 nearest neighbour, the model will be fit only to the 1-nearest point and will be really close to the training data and hence will show a reduction in error when the training data increases. The positive reduction in error for the algorithm J48 is also expected because with more exposure to training data the error-based pruning estimate will make the error pessimistic and with a larger tree the error will be low and tend to be close to the training data.   
+
+The effect is more pronounced for IBk than J48 as the number of training set approaches 100%, because of IBk having low bias, being accurate and not losing information by generalization by keeping close to the training data (57.64-35.21) / 35.21 > (71.93-49.59) / 71.93. However initially during 10% training the effect is initially higher for J48 than IBk because J48 tends to overfit the data because of inductive bias in accordance with Occam's Razor and a preference for shorter trees and high information gain near the root. This can be seen in the variation of the learning curve where J48 had 3 datasets with a higher learning curve than IBk, over the 2 datasets where IBk had a higher learning curve than J48. This is because the greedy search that J48 utilizes causes it to overfit the data relative to IBk resulting in an increase in optimistic estimate of the true error of the model as the training error decreases. 
+
+2a) 
+When looking at the statistical significance, there is no significant difference between the low noise and the baseline of no noise and therefore we can infer that learning has managed to avoid overfitting at low noise as they are equal. When looking at the medium noise compared to no noise, there is also no statistical sigificance for one dataset hungarian-14-heart-diseas and therefore but a sigificiant difference can be inferred across the other 3 datasets and hence we can say learning has managed to partially avoided overfitting for medium noise. Lastly, for the high noise there is significant difference between all datasets compared to the baseline with no noise and hence we cannot infer that learning has managed to avoid overfitting at high levels of added noise.
+
+2b) 
+The parameter selection is helping with overfitting avoidance, this is assessed by comparing the percentage incorrect of the algorithm J48 with default parameters (no pruning) to J48 with pruning (overfitting avoidance) both with noise set at 50%. From this we can see that the percentage incorrect for J48 with pruning is 46.63%, 66.31%, 35.22%, 22.23% across all datasets which is lower than the default J48 at 60.74%, 69.02%, 42.88% and 28.99% respectively meaning that there is reduced-error with overfitting avoidance and consequently more accuracy. 
+
+3a) 
+By examining the effect of variable transformation on cross-validation error it is best to compare it to the original linear regression with no variable transformations:
+
+Original Linear Regression Errors -
+Mean absolute error                  50806.1304
+Root mean squared error              69637.9114
+Relative absolute error                 55.7203 %
+Root relative squared error             60.3415 %
+
+Through log transforming all of the indepedent variables except the latitude and longitude, errors are - 
+Mean absolute error                      0.2565
+Root mean squared error                  0.3405
+Relative absolute error                 55.7175 %
+Root relative squared error             59.8186 %
+The effect of the cross-validation error can be measured through RAE and RRSE and the dependent variable are measured on different scales, and the error can be seen to have decreased slightly.
+
+Through log transforming all of the indepedent variables except the latitude and longitude, errors are - 
+Mean absolute error                  54665.7479
+Root mean squared error              72571.4529
+Relative absolute error                 59.9532 %
+Root relative squared error             62.8834 %
+The effect of the cross-validation error in this case since the magnitudes are expressed in the median house value (dependent variable), MAE, RMSE, RAE, RRSE can be seen to have increased.
+
+Through square root transforming all of indepedent the variables except the latitude and longitude, errors are -
+Mean absolute error                  50981.5195
+Root mean squared error              68633.1477
+Relative absolute error                 55.9126 %
+Root relative squared error             59.4708 %
+The effect of the cross-validation error in this case since the magnitudes are expressed in the median house value (dependent variable), MAE, RAE, can be seen to have increased slightly whilst the RMSE and RRSE have decreased slightly.
+
+3b) 
+When the relationship is better explained by a non-linear relationship, it can be better captured in through a transformation when other variables have for example an exponential relationship by taking the log, or having a squared relationship and taking the square root. This way the relationships can be transformed into a linear model and hence can reduce the error, or if it is transformed into more non-linear it will increase the error.
+
+4)
+In the Naive Bayes Multinomial model, it has the assumption that words at different word positions are drawn independently from the same categorical distribution and assumes conditional independence between word occurences. In that model it collects all the words that occurs in the web snippets data set and creates a vocabulary histogram counting all the words that occur in the class (e.g. business, computers) and calculates the probability of the word in the vocabulary occuring in the class.
+In the J48 decision tree model, the class (e.g. business, computers) is represented by an internal node which is tested against a branch which contains the classes frequency distribution of the words that occur in the web snippet data set, each leaf node then assigns a classification to the class consisting of the distribution of words occurred. 
+For the Naive Bayes model, the class (e.g. business, computers) is segmented by the web snippets data set and then computes the mean and variance of each attribute in the class. The probability distribution of the words are then calculated by their respective normal distributions. 
+The precision of the J48 model can be seen to be relatively the same across 10, 100 and 500 attributes, where in the naive bayes model the precision jumps a lot from 10 to 100 attributes and stays approximately the same from 100 to 500. 
+An example of text classification in general and snippets in particular that would actually give these results is with actual random spam where words were randomly sampled from a vocabulary list (email that is completely unstructured in linguistics) because the naive bayes multinomial model had the best precision meaning that the positioning of the words doesn't matter.
